@@ -1,5 +1,4 @@
 abstract Policy
-
 choose(p::Policy, a::Agent) = 0
 
 type EpsilonGreedyPolicy <: Policy
