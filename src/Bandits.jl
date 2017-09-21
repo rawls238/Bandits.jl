@@ -3,9 +3,9 @@ import Distributions
 import Base: >=, <=
 
 export
-    Bandit, StaticBandit, pull, regret,
+    Bandit, StaticBandit, staticbandit, pull, regret,
     Arm, RandomArm,
-    Policy, EpsilonGreedyPolicy, choose,
+    Policy, GreedyPolicy, EpsilonGreedyPolicy, choose,
     Agent, BasicAgent, choose, observe,
     Action, generate_arbitrary_action,
     BanditStats, simulate

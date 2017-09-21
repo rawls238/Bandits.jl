@@ -11,5 +11,5 @@ function simulate(bandit::Bandit, agent::Agent, periods::Integer)
     total_regret += regret(bandit, action)
     observe(agent, reward)
   end
-  BanditStats(regret, agent.action_attempts)
+  BanditStats(total_regret, agent.action_attempts)
 end

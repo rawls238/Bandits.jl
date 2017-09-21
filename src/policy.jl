@@ -3,6 +3,9 @@ abstract type Agent end
 
 choose(p::Policy, a::Agent) = 0
 
+immutable GreedyPolicy <: Policy end
+choose(p::GreedyPolicy, a::Agent) = rand(findallmax(a.value_belief))
+
 immutable EpsilonGreedyPolicy <: Policy
     ϵ::Float64
 end

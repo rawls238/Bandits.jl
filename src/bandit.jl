@@ -6,13 +6,13 @@ regret(b::Bandit, action_idx::Integer) = 0
 
 
 immutable StaticBandit <: Bandit
-  action_distributions::AbstractVector{Distribution{Univariate,Continuous}}
+  action_distributions::AbstractVector{Distribution}
+  num_arms::Integer
   optimal_expected_return::Float64 #here the arms are static so the best arm is always the same
-  function StaticBandit(action_distributions::AbstractVector{Distribution{Univariate,Continuous}})
-    opt = maximum([mean(distr) for distr in action_distributions])
-    StaticBandit(action_distributions, opt)
-  end
 end
+
+# TODO: weird typing issue here - have a sense it's a Julia bug or I'm misunderstanding something in v0.6
+staticbandit(action_distributions) = StaticBandit(action_distributions, length(action_distributions), maximum([mean(distr) for distr in action_distributions]))
 
 pull(sb::StaticBandit, action_idx::Integer) = rand(sb.action_distributions[action_idx])
 
