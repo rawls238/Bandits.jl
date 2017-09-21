@@ -1,5 +1,3 @@
-
-
 # Source: https://stackoverflow.com/questions/41636928/julia-find-the-indices-of-all-maxima
 function findallmax(arr)
     max_positions = Vector{Int}()

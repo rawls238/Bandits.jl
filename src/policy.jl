@@ -1,7 +1,9 @@
-abstract Policy
+abstract type Policy end
+abstract type Agent end
+
 choose(p::Policy, a::Agent) = 0
 
-type EpsilonGreedyPolicy <: Policy
+immutable EpsilonGreedyPolicy <: Policy
     ϵ::Float64
 end
 
