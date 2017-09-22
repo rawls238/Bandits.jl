@@ -1,6 +1,6 @@
 module Bandits
 import Distributions
-import Base: >=, <=
+import Base: >=, <=, +, /
 
 export
     Bandit, StaticBandit, staticbandit, pull, regret,
@@ -8,7 +8,7 @@ export
     Policy, GreedyPolicy, EpsilonGreedyPolicy, choose,
     Agent, BasicAgent, choose, observe,
     Action, generate_arbitrary_action,
-    BanditStats, simulate
+    BanditStats, simulate, aggregate_simulate
 
 include("utils.jl")
 include("actions.jl")
