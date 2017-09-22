@@ -16,6 +16,6 @@ The third is a `Agent` type, which requires the prior of the agent, the underlyi
 
 Now, we can call `simulate` and get back a `BanditStats` object which returns the regret and the number of times each arm was pulled.
 
-As well, this package provides an `aggregate_simulate` function which aggregates the results of N simulations run in parallel.
+As well, this package provides an `aggregate_simulate` function which aggregates the results of N simulations run in parallel and returns the average.
 
 License: MIT
