@@ -53,3 +53,33 @@ function observe(agent::BetaBernoulliAgent, reward::Float64)
 end
 
 randomSample(agent::BetaBernoulliAgent) = [rand(beta(agent.α[i], agent.β[i])) for i in 1:length(agent.total_reward)]
+
+type NormalAgent <: Agent
+  prior_mean::AbstractVector{Float64}
+  prior_variance::AbstractVector{Float64}
+  empirical_mean::AbstractVector{Float64}
+  policy::Policy
+  bandit::Bandit
+  period::Integer
+  action_attempts::AbstractVector{Float64}
+  total_reward::AbstractVector{Float64}
+  last_action::Integer
+end
+function NormalAgent(prior_mean::AbstractVector{Float64}, prior_variance::AbstractVector{Float64}, policy::Policy, bandit::Bandit)
+  NormalAgent(prior_mean, prior_variance, zeros(K), policy, bandit, -1, zeros(K), zeros(K), -1)
+end
+NormalAgent(policy::Policy, bandit::Bandit) = NormalAgent(zeros(bandit.num_arms), ones(bandit.num_arms), policy, bandit)
+
+get_variances(a::NormalAgent) = prior_variance ./ (1 + action_attempts)
+
+function observe(agent::NormalAgent, reward::Float64)
+  agent.period += 1
+  agent.action_attempts[agent.last_action] += 1
+  agent.total_reward[agent.last_action] += reward
+  agent.empirical_mean = agent.total_reward ./ agent.action_attempts
+end
+
+function randomSample(agent::NormalAgent)
+  variances = get_variances(agent)
+  return [rand(normal(empirical_mean[i], variances[i]) for i in 1:length(empirical_mean))]
+end

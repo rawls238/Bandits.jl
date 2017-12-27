@@ -12,7 +12,19 @@ The first is a `Bandit` type, which specifies the true distribution of each of t
 
 The second is a `Policy` type, which specifies the policy the agent is going to follow. This type is used to specify the arm the agent should choose given the agent's beliefs over the arms.
 
+Currently, the implemented policies are:
+* Greedy
+* Epsilon-Greedy
+* ThompsonSampling
+* UCB1
+* ExploreThenExploit
+
 The third is a `Agent` type, which requires the prior of the agent, the underlying bandit, and the policy the agent should follow. 
+
+Currently, the following Agents are implemented:
+* BasicAgent - this agent forms beliefs over the arms based only on observed rewards (via the empirical mean) and an initial belief about the means of the arms.
+* BetaBernoulliAgent - this agent has beta priors and should be used wih Bernoulli-distributed arms. Posterior updating is done via the standard Bayesian updating formula for the Beta distribution.
+* NormalAgent - this agent has Gaussian priors and should be used with Gaussian arms.
 
 Now, we can call `simulate` and get back a `BanditStats` object which returns the regret and the number of times each arm was pulled.
 
