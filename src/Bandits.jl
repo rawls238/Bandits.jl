@@ -5,8 +5,8 @@ import Base: >=, <=
 export
     Bandit, StaticBandit, staticbandit, pull, regret,
     Arm, RandomArm,
-    Policy, GreedyPolicy, EpsilonGreedyPolicy, choose,
-    Agent, BasicAgent, choose, observe,
+    Policy, GreedyPolicy, EpsilonGreedyPolicy, ExploreThenExploit, UCB1, ThompsonSampling, choose,
+    Agent, BasicAgent, BetaBernoulliAgent, randomSamplingchoose, observe,
     Action, generate_arbitrary_action,
     BanditStats, simulate
 
