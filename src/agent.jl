@@ -14,10 +14,10 @@ type BasicAgent <: Agent
   total_reward::AbstractVector{Float64}
   last_action::Integer
 end
-function BasicAgent(policy::Policy, bandit::Bandit, initial_mean::Integer) 
-  BasicAgent(ones(bandit.num_arms) * initial_mean, policy, bandit, 0, zeros(bandit.num_arms), zeros(bandit.num_arms), -1)
+function BasicAgent(policy::Policy, bandit::Bandit, initial_mean::Integer, belief::AbstractVector{Float64}) 
+  BasicAgent(belief, policy, bandit, 0, zeros(bandit.num_arms), zeros(bandit.num_arms), -1)
 end
-BasicAgent(policy::Policy, bandit::Bandit) = BasicAgent(policy, bandit, 0)
+BasicAgent(policy::Policy, bandit::Bandit, belief::AbstractVector{Float64}) = BasicAgent(policy, bandit, 0, belief)
 
 function observe(agent::BasicAgent, reward::Float64)
   agent.period += 1
