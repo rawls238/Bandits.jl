@@ -30,4 +30,15 @@ Now, we can call `simulate` and get back a `BanditStats` object which returns th
 
 As well, this package provides an `aggregate_simulate` function which aggregates the results of N simulations run in parallel and returns the average.
 
+Example usage as follows:
+```julia
+using Bandits
+
+thompson_sampling = ThompsonSampling()
+sb = staticbandit([Bernoulli(0.5), Bernoulli(0.6)])
+beta_agent = BetaBernoulliAgent([0.6, 0.5], thompson_sampling, sb)
+stats = simulate(sb, beta_agent, 100)
+print(stats.regret)
+```
+
 License: MIT
