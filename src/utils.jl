@@ -1,5 +1,6 @@
 # Source: https://stackoverflow.com/questions/41636928/julia-find-the-indices-of-all-maxima
-function findallmax(arr)
+# returns max indices 
+function find_all_max_indices(arr)
     max_positions = Vector{Int}()
     min_val = typemin(eltype(arr))
     for i in eachindex(arr)
