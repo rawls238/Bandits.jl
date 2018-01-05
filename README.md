@@ -4,6 +4,13 @@
 
 This package provides tools for simulation of multi-armed bandit problems.
 
+## Installation
+
+```
+Pkg.add("Bandits")
+```
+
+
 ## Documentation
 
 There are several underlying types that need to be constructed before simulation.
