@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/rawls238/Bandits.jl.svg?branch=master)](https://travis-ci.org/rawls238/Bandits.jl)
 
-This package provides tools for simulation of multi-armed bandit problems.
+This package provides tools for simulation of [multi-armed bandit problems](https://en.wikipedia.org/wiki/Multi-armed_bandit).
 
 ## Installation
 
