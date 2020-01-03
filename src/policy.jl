@@ -3,10 +3,10 @@ abstract type Agent end
 
 choose(p::Policy, a::Agent) = 0
 
-immutable GreedyPolicy <: Policy end
+struct GreedyPolicy <: Policy end
 choose(p::GreedyPolicy, a::Agent) = rand(find_all_max_indices(a.empirical_mean))
 
-immutable EpsilonGreedyPolicy <: Policy
+struct EpsilonGreedyPolicy <: Policy
   ϵ::Float64
 end
 
@@ -18,10 +18,10 @@ function choose(p::EpsilonGreedyPolicy, a::Agent)
   end
 end
 
-immutable ThompsonSampling <: Policy end
+struct ThompsonSampling <: Policy end
 choose(p::ThompsonSampling, a::Agent) = rand(find_all_max_indices(randomSample(a)))
 
-immutable UCB1 <: Policy end
+struct UCB1 <: Policy end
 function choose(p::UCB1, a::Agent)
   num_arms = length(a.action_attempts)
   for i in 1:num_arms
@@ -41,7 +41,7 @@ function choose(p::UCB1, a::Agent)
   return rand(find_all_max_indices(ucb_values))
 end
 
-immutable ExploreThenExploit <: Policy
+struct ExploreThenExploit <: Policy
   exploration_steps::Integer
 end
 

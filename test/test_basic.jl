@@ -1,6 +1,6 @@
 using Bandits
 using Distributions
-using Base.Test
+using Test
 
 
 T = 100

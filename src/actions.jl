@@ -1,4 +1,4 @@
-type Action
+mutable struct Action
   name::AbstractString
   value::Float64
 end

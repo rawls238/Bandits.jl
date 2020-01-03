@@ -5,7 +5,7 @@ pull(b::Bandit, action_idx::Integer) = 0
 regret(b::Bandit, action_idx::Integer) = 0
 
 
-immutable StaticBandit <: Bandit
+struct StaticBandit <: Bandit
   action_distributions::AbstractVector{Distribution}
   num_arms::Integer
   optimal_expected_return::Float64 #here the arms are static so the best arm is always the same
