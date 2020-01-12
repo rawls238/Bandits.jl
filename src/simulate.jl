@@ -1,4 +1,6 @@
-type BanditStats
+using Distributed: @distributed
+
+mutable struct BanditStats
   regret::Float64
   arm_counts::AbstractVector{Float64}
 end
@@ -18,7 +20,7 @@ end
 
 
 function aggregate_simulate(bandit::Bandit, agent::Agent, periods::Integer, n::Integer)
-  qs = @parallel (+) for i=1:n
+  qs = @distributed (+) for i=1:n
     simulate(bandit, agent, periods)
   end
   return qs / n

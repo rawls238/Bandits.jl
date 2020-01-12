@@ -5,7 +5,7 @@ function choose(a::Agent)
   return action_idx
 end
 
-type BasicAgent <: Agent
+mutable struct BasicAgent <: Agent
   empirical_mean::AbstractVector{Float64}
   policy::Policy
   bandit::Bandit
@@ -14,7 +14,7 @@ type BasicAgent <: Agent
   total_reward::AbstractVector{Float64}
   last_action::Integer
 end
-function BasicAgent(policy::Policy, bandit::Bandit, initial_mean::Integer, belief::AbstractVector{Float64}) 
+function BasicAgent(policy::Policy, bandit::Bandit, initial_mean::Integer, belief::AbstractVector{Float64})
   BasicAgent(belief, policy, bandit, 0, zeros(bandit.num_arms), zeros(bandit.num_arms), -1)
 end
 BasicAgent(policy::Policy, bandit::Bandit, belief::AbstractVector{Float64}) = BasicAgent(policy, bandit, 0, belief)
@@ -26,7 +26,7 @@ function observe(agent::BasicAgent, reward::Float64)
   agent.empirical_mean[agent.last_action] = agent.total_reward[agent.last_action] / agent.action_attempts[agent.last_action]
 end
 
-type BetaBernoulliAgent <: Agent
+mutable struct BetaBernoulliAgent <: Agent
   α::AbstractVector{Float64}
   β::AbstractVector{Float64}
   empirical_mean::AbstractVector{Float64}
@@ -40,7 +40,7 @@ end
 function BetaBernoulliAgent(α::AbstractVector{Float64}, β::AbstractVector{Float64}, policy::Policy, bandit::Bandit)
   BetaBernoulliAgent(α, β, α ./ (α + β), policy, bandit, 0, zeros(bandit.num_arms), zeros(bandit.num_arms), -1)
 end
-BetaBernoulliAgent(means::AbstractVector{Float64}, policy::Policy, bandit::Bandit) = BetaBernoulliAgent(means, 1 - means, policy, bandit)
+BetaBernoulliAgent(means::AbstractVector{Float64}, policy::Policy, bandit::Bandit) = BetaBernoulliAgent(means, 1 .- means, policy, bandit)
 BetaBernoulliAgent(policy::Policy, bandit::Bandit) = BetaBernoulliAgent(ones(bandit.num_arms), ones(bandit.num_arms), policy, bandit)
 
 
@@ -61,7 +61,7 @@ end
 
 randomSample(agent::BetaBernoulliAgent) = [rand(Beta(agent.α[i], agent.β[i])) for i in 1:length(agent.empirical_mean)]
 
-type NormalAgent <: Agent
+mutable struct NormalAgent <: Agent
   prior_mean::AbstractVector{Float64}
   prior_variance::AbstractVector{Float64}
   empirical_mean::AbstractVector{Float64}
@@ -77,7 +77,7 @@ function NormalAgent(prior_mean::AbstractVector{Float64}, prior_variance::Abstra
 end
 NormalAgent(policy::Policy, bandit::Bandit) = NormalAgent(zeros(bandit.num_arms), ones(bandit.num_arms), policy, bandit)
 
-get_variances(a::NormalAgent) = a.prior_variance ./ (1 + a.action_attempts)
+get_variances(a::NormalAgent) = a.prior_variance ./ (1 .+ a.action_attempts)
 
 function observe(agent::NormalAgent, reward::Float64)
   agent.period += 1
